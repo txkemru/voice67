@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--header-bg);
+  padding: 10px 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  position: relative;
+  z-index: 10;
+}
+
+.menu-btn,
+.new-chat-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent !important;
+  border: none !important;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  color: var(--text-color);
+}
+
+.app-title {
+  font-size: 12px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-color);
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Стиль по умолчанию (может дублироваться) */
+.new-chat-btn,
+.menu-btn {
+  background: var(--input-bg);
+  color: var(--text-color);
+}

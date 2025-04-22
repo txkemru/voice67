@@ -1,0 +1,77 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+body, html, .app-container {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+
+
+.app-container {
+  background: var(--input-bg);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: relative;
+}
+
+/* Оверлей для бокового меню */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--input-bg);
+  display: flex;
+  justify-content: flex-start;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.sidebar-overlay.open {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sidebar-wrapper {
+  width: 80%;
+  background: var(--input-bg);
+  height: 100%;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-overlay.open .sidebar-wrapper {
+  transform: translateX(0);
+}
+
+
+button,
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  outline: none;
+  color: inherit;
+}
+
+/* Если кнопки превращаются в синие ссылки, задайте нужный цвет явно */
+button {
+  background: transparent;
+  color: var(--text-color);
+  border: none;
+}

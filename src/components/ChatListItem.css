@@ -1,0 +1,51 @@
+/* Обёртка заголовка чата в списке */
+.chat-list-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: var(--input-bg);
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  margin: 8px 0;
+}
+
+/* Заголовок чата */
+.chat-list-item-title {
+  width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-color);
+}
+
+/* Кнопка удаления чата */
+.delete-btn {
+  background: var(--button-bg, black);
+  color: var(--button-color, white);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #333;
+}
+
+/* Если нужно добавить отступы для боковых кнопок в Sidebar */
+.sidebar .sidebar-footer button {
+  margin: 5px 0;
+  background: var(--button-bg, black);
+  color: var(--button-color, white);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}

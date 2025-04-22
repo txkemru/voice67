@@ -1,0 +1,122 @@
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  font-size: 16px;
+  color: var(--text-color);
+  background: var(--bg-color);
+}
+
+.chat-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-color);
+  padding: 10px;
+  overflow: hidden;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+}
+
+/* Заголовок чата */
+.chat-header {
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  background-color: var(--input-bg);
+  border-radius: 10px;
+}
+
+.chat-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+/* Стили сообщений */
+.messages {
+  flex: 1;
+  overflow-y: auto;                    /* Стили сообщений *//* Стили сообщений *//* Стили сообщений */
+  margin-bottom: 10px;
+}
+
+.message {
+  max-width: 80ch;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  border-radius: 20px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  line-height: 1.8;
+  font-size: 16px;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* Сообщения бота */
+.message.app {
+  background: var(--app-message-bg, #ffffff);
+  color: var(--text-color);
+  margin-right: auto;
+}
+/* Сообщения пользователя */
+.message.user {
+  background: var(--user-message-bg, #dbdbdb);
+  color: var(--text-color);
+  margin-left: auto;
+  max-width: 70%;
+  padding: 10px 15px;
+  border-radius: 20px;
+}
+
+.no-messages {
+  text-align: center;
+  color: #999;
+  margin-top: 20px;
+}
+
+.chat-window.no-chat {
+  display: flex;
+  align-items: center;              /* Сообщения пользователя *//* Сообщения пользователя *//* Сообщения пользователя *//* Сообщения пользователя *//* Сообщения пользователя */
+  justify-content: center;
+  padding: 0;
+}
+
+.no-chat-content {
+  text-align: center;
+}
+
+.no-chat-animation {
+  max-width: 200px;
+  margin-bottom: 20px;
+}
+
+.no-chat-text {
+  font-size: 18px;
+  color: #666;
+}
+
+
+@media (min-width: 768px) {
+  .chat-window {
+    max-width: 1000px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .messages {
+    padding: 0 10px;
+  }
+}
+
+.typing-indicator .dots {
+  display: inline-block;
+  animation: dotsAnimation 1.2s infinite steps(4);
+}
+
+@keyframes dotsAnimation {
+  0% { content: ""; }
+  25% { content: "."; }
+  50% { content: ".."; }
+  75% { content: "..."; }
+  100% { content: ""; }
+}
