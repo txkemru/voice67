@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import ChatListItem from './ChatListItem';
 import './Sidebar.css';
+import FooterMenu from './FooterMenu';
+import ThemeIcon from './ThemeIcon';
 
-function Sidebar({ chats = [], onDeleteChat, onSelectChat }) {
+function Sidebar({ chats = [], onDeleteChat, onSelectChat, onRenameChat, onOpenDeveloper, onOpenWelcomeModal, pendingDeleteId, onCancelDelete }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [isDarkTheme, setIsDarkTheme] = useState(() => {
+    return document.body.classList.contains('dark');
+  });
 
   // Фильтрация по сообщениям
-  const filteredChats = chats.filter(chat =>
-    chat.messages?.some(msg =>
+  const filteredChats = chats.filter(chat => {
+    const inName = chat.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    const inMessages = chat.messages?.some(msg =>
       msg.text.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-  );
+    );
+    return inName || inMessages;
+  });
+  
+  
 
   // ⬇️ Переключение темы
   const handleToggleTheme = () => {
-    const isDark = document.body.classList.toggle('dark');
-    sessionStorage.setItem('theme', isDark ? 'dark' : 'light');
+    setIsDarkTheme(!isDarkTheme);
+    document.body.classList.toggle('dark');
+    localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
   };
 
   // ⬇️ Установка сохранённой темы при загрузке
   useEffect(() => {
-    const savedTheme = sessionStorage.getItem('theme');
+    const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark') {
       document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
     }
   }, []);
 
   return (
     <aside className="sidebar">
       <div className="sidebar-header">Чаты</div>
-
+  
       <div className="sidebar-search">
         <input
           type="text"
@@ -38,7 +50,7 @@ function Sidebar({ chats = [], onDeleteChat, onSelectChat }) {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </div>
-
+  
       <ul className="chat-list">
         {(searchTerm ? filteredChats : chats).map(chat => (
           <ChatListItem 
@@ -46,14 +58,30 @@ function Sidebar({ chats = [], onDeleteChat, onSelectChat }) {
             chatId={chat.id}
             chatName={chat.name}
             onDelete={onDeleteChat}
-            onSelect={onSelectChat}
+            onSelect={pendingDeleteId === chat.id ? () => onCancelDelete(chat.id) : onSelectChat}
+            onRename={onRenameChat}
+            onExportPDF={() => {
+              const selectedChat = chats.find(c => c.id === chat.id);
+              if (selectedChat) {
+                import('./utils/exportToPDF').then(({ exportChatToPDF }) => {
+                  exportChatToPDF(selectedChat);
+                });
+              }
+            }}
+            pendingDelete={pendingDeleteId === chat.id}
           />
         ))}
       </ul>
-
+  
       <div className="sidebar-footer">
-        <button onClick={handleToggleTheme}>Тема</button>
-        <button>Информация</button>
+        <FooterMenu 
+          onOpenDevModal={onOpenDeveloper}
+          onOpenWelcomeModal={onOpenWelcomeModal}
+        />
+        <button className="theme-toggle-button-sidebar" onClick={handleToggleTheme} style={{display:'flex',alignItems:'center',gap:8,justifyContent:'center'}}>
+          <ThemeIcon isDark={isDarkTheme} />
+          <span>Сменить тему</span>
+        </button>
       </div>
     </aside>
   );

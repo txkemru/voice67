@@ -46,6 +46,7 @@ body {
   margin-bottom: 12px;
   border-radius: 20px;
   overflow-wrap: break-word;
+  white-space: pre-wrap; 
   word-wrap: break-word;
   line-height: 1.8;
   font-size: 16px;
@@ -119,4 +120,48 @@ body {
   50% { content: ".."; }
   75% { content: "..."; }
   100% { content: ""; }
+}
+
+
+
+/* чтобы контейнер сообщения мог позиционировать кнопку */
+.message {
+  position: relative;
+}
+
+/* обёртка для кнопки копирования */
+.message-actions {
+  position: static;      /* вместо absolute */
+  margin-top: 8px;       /* небольшой отступ сверху */
+  display: flex;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+/* сама кнопка «📋 Копировать» без фона */
+.copy-btn {
+  background: transparent;
+  border: none;
+  color: #888888;        /* серый цвет */
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* слово «Копировать» рядом с иконкой */
+.copy-text {
+  font-size: 13px;
+  user-select: none;
+}
+
+/* метка «Скопировано!» вместо кнопки */
+.copied-label {
+  font-size: 13px;
+  color: var(--btn-accent);
+  font-weight: 500;
+}
+
+.copy-btn:hover {
+  color: #adc5c1;
 }

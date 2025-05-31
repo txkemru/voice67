@@ -1,51 +1,125 @@
-/* Обёртка заголовка чата в списке */
+.chat-list-item {
+  margin-bottom: 10px;
+}
+
 .chat-list-item-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 15px;
   background: var(--input-bg);
-  border: 1px solid #ddd;
+  border: 1px solid #414141;
   border-radius: 15px;
-  margin: 8px 0;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-/* Заголовок чата */
+.chat-list-item-header:hover {
+  background: #2a2a2a;
+  border-color: #5a5a5a;
+}
+
+.chat-list-item-header:hover .chat-list-item-title {
+  color: #ffffff;
+}
+
 .chat-list-item-title {
-  width: 260px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--text-color);
+  transition: color 0.2s;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.chat-rename-input {
+  flex: 1;
+  margin-right: 10px;
+  padding: 4px 8px;
+  border: 1px solid var(--btn-accent);
+  border-radius: 4px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 12px;
+  font-weight: 500;
+  outline: none;
+}
+
+.chat-rename-input:focus {
+  border-color: var(--btn-accent);
+  box-shadow: 0 0 0 2px rgba(36, 129, 204, 0.2);
 }
 
 /* Кнопка удаления чата */
-.delete-btn {
-  background: var(--button-bg, black);
-  color: var(--button-color, white);
-  border: none;
+.delete-chat-btn {
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  font-size: 14px;
+  border: none;
+  font-size: 16px;
+  background: #ff4d4f;
+  color: #fff;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.3s ease;
 }
 
-.delete-btn:hover {
-  background: #333;
+.delete-chat-btn:hover {
+  background: #d9363e;
 }
 
-/* Если нужно добавить отступы для боковых кнопок в Sidebar */
-.sidebar .sidebar-footer button {
-  margin: 5px 0;
-  background: var(--button-bg, black);
-  color: var(--button-color, white);
-  border: none;
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
+body.dark .delete-chat-btn {
+  background: #ff4d4f;
+  color: white;
+}
+
+body.dark .delete-chat-btn:hover {
+  background: #c0392b;
+}
+
+.chat-list-item.pending-delete .chat-list-item-header {
+  border: 2px solid #ff4d4f !important;
+  background: rgba(255,77,79,0.07);
+  position: relative;
+  box-shadow: 0 0 0 2px #ff4d4f33;
+}
+.pending-delete-bar {
+  position: relative;
+  height: 18px;
+  margin: 0 12px 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pending-delete-progress {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #ff4d4f 60%, #fff0f0 100%);
+  border-radius: 4px;
+  width: 0%;
+  animation: pendingDeleteBarAnim 3s linear forwards;
+  z-index: 1;
+  opacity: 0.25;
+}
+@keyframes pendingDeleteBarAnim {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+.pending-delete-text {
+  position: relative;
+  z-index: 2;
+  font-size: 11px;
+  color: #ff4d4f;
+  font-weight: 500;
+  padding-left: 8px;
+  letter-spacing: 0.01em;
+  user-select: none;
+}
+body.dark .pending-delete-bar {
+  background: none;
+}
+body.dark .pending-delete-text {
+  color: #ff8a80;
 }

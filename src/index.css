@@ -10,9 +10,11 @@ body {
 :root {
   --bg-color: #ffffff;
   --text-color: #1a1a1a;
-  --input-bg: #f9f9f9;
+  --input-bg: #ffffff;
   --button-bg: black;
   --button-color: white;
+  --btn-accent: #2481cc;
+  --link-color: #0077cc; 
 }
 
 body.dark {
@@ -21,9 +23,10 @@ body.dark {
   --input-bg: #212121;
   --btn-bg: #444;
   --btn-text: #fff;
-
+  --btn-accent: #2481cc;
   --app-message-bg: #2a2a2a;
   --user-message-bg: #3b3b3b;
+  --link-color: #66ccff;
 }
 
 

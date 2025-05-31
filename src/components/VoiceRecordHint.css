@@ -1,0 +1,80 @@
+.voice-record-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #d32f2f;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 6px 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+  z-index: 2000;
+  margin-bottom: 6px;
+  border: 1px solid #ffcdd2;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.voice-record-hint.closing {
+  opacity: 0;
+  transform: translateX(-50%) translateY(8px);
+}
+
+.voice-record-hint.continuing {
+  color: #2e7d32;
+  border-color: #a5d6a7;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.voice-hint-icon {
+  font-size: 1.3em;
+  margin-right: 4px;
+}
+
+.hint-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: #d32f2f;
+  transition: width 16ms linear;
+}
+
+.voice-record-hint.continuing .hint-progress {
+  background: #2e7d32;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateX(-50%) translateY(8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(-50%) translateY(0); 
+  }
+}
+
+body.dark .voice-record-hint {
+  background: #1a1a1a;
+  color: #ff8a80;
+  border-color: #422;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .voice-record-hint.continuing {
+  color: #81c784;
+  border-color: #1b5e20;
+}
+
+body.dark .hint-progress {
+  background: #ff8a80;
+}
+
+body.dark .voice-record-hint.continuing .hint-progress {
+  background: #81c784;
+} 
