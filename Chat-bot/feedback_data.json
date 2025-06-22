@@ -1,0 +1,32 @@
+{
+    "1783fb2d-7ef6-417a-b4e1-fe1566470dc3": {
+        "id": "1783fb2d-7ef6-417a-b4e1-fe1566470dc3",
+        "user_id": 6396470927,
+        "username": "alexxtui",
+        "full_name": "Александр Манчелаев",
+        "type": "text",
+        "feedback": "Почему он мне говорит, привет гость, а не привет, Саша! Например..",
+        "status": "processed",
+        "timestamp": 1748891581.0
+    },
+    "37f19a85-200c-455d-ac36-0c6aac79fa46": {
+        "id": "37f19a85-200c-455d-ac36-0c6aac79fa46",
+        "user_id": 6396470927,
+        "username": "alexxtui",
+        "full_name": "Александр Манчелаев",
+        "type": "text",
+        "feedback": "Ужас",
+        "status": "processed",
+        "timestamp": 1748891736.0
+    },
+    "b29423d7-0668-4e85-8844-f03b70f7baff": {
+        "id": "b29423d7-0668-4e85-8844-f03b70f7baff",
+        "user_id": 6396470927,
+        "username": "alexxtui",
+        "full_name": "Александр Манчелаев",
+        "type": "text",
+        "feedback": "Все круто!",
+        "status": "processed",
+        "timestamp": 1748891906.0
+    }
+}
