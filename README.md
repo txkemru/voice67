@@ -1,12 +1,49 @@
-# React + Vite
+[EN](./README.md) | [RU](./README.ru.md)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Telegram Mini App (React + Vite)
 
-Currently, two official plugins are available:
+This directory contains the frontend part of the diploma project, a Telegram Mini App built with React and Vite. This application provides the user interface that users interact with directly inside Telegram.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## About This App
 
-## Expanding the ESLint configuration
+This application is designed to work as a client for the main project's backend. It provides a rich, interactive user interface for the AI assistant, allowing users to interact with its features in a more visual way than a standard chatbot would allow.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Tech Stack
+
+-   **Framework**: [React](https://reactjs.org/)
+-   **Build Tool**: [Vite](https://vitejs.dev/)
+-   **Styling**: CSS
+
+## Getting Started
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+You need to have Node.js and npm installed on your machine.
+-   [Node.js](https://nodejs.org/)
+
+### Installation
+
+1.  Navigate to the app directory:
+    ```sh
+    cd my-telegram-diplom-app
+    ```
+2.  Install NPM packages:
+    ```sh
+    npm install
+    ```
+
+### Running the App
+
+To run the app in development mode, execute:
+```sh
+npm run dev
+```
+This will start the development server.
+
+## Author
+
+-   **Vladimir Pushkov**
+-   Telegram: [@txkem](https://t.me/txkem)
+-   GitHub: [txkemru](https://github.com/txkemru)
