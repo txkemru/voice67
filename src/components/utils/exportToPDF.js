@@ -6,6 +6,11 @@ export function exportChatToPDF(chat) {
   if (!chat) return;
 
   const doc = new jsPDF();
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 20;
+  const maxWidth = pageW - (margin * 2);
+  const lineHeight = 8; // Высота одной строки текста
 
   // 👇 Регистрируем шрифт
   doc.addFileToVFS('Roboto-Medium.ttf', roboto);
@@ -13,9 +18,6 @@ export function exportChatToPDF(chat) {
   doc.setFont('Roboto');
 
   // 👇 Титульная страница
-  const pageW = doc.internal.pageSize.getWidth();
-  const pageH = doc.internal.pageSize.getHeight();
-
   doc.setFontSize(24);
   doc.text('Стенограмма чата', pageW / 2, pageH / 2 - 20, { align: 'center' });
 
@@ -26,9 +28,9 @@ export function exportChatToPDF(chat) {
   doc.addPage();
 
   // 👇 Содержимое чата
-  let y = 20;
+  let y = margin;
   doc.setFontSize(16);
-  doc.text(`Чат: ${chat.name}`, 20, y);
+  doc.text(`Чат: ${chat.name}`, margin, y);
   y += 15;
 
   chat.messages.forEach(msg => {
@@ -43,20 +45,19 @@ export function exportChatToPDF(chat) {
     const role = msg.type === 'user' ? 'Вы:' : 'Ассистент:';
     const fullText = `${role}\n${msg.text}`;
 
-    // Разбиваем текст на строки
-    const lines = doc.splitTextToSize(fullText, 180);
+    // Разбиваем текст на строки с учетом максимальной ширины
+    const lines = doc.splitTextToSize(fullText, maxWidth);
     
-    // Проверяем, поместится ли весь текст на текущей странице
-    const textHeight = lines.length * 8;
-    if (y + textHeight > 250) {
-      doc.addPage();
-      y = 20;
-    }
-
-    // Выводим текст
+    // Выводим текст построчно с проверкой переноса страницы
     lines.forEach(line => {
-      doc.text(line, 20, y);
-      y += 8;
+      // Проверяем, поместится ли текущая строка на текущей странице
+      if (y + lineHeight > pageH - margin) {
+        doc.addPage();
+        y = margin; // Начинаем с верхнего отступа на новой странице
+      }
+
+      doc.text(line, margin, y);
+      y += lineHeight; // Увеличиваем Y на высоту строки
     });
   });
 
@@ -68,8 +69,8 @@ export function exportChatToPDF(chat) {
     doc.setFont('Roboto', 'normal');
     doc.text(
       `Страница ${i} из ${pageCount}`,
-      pageW - 20,
-      pageH - 10,
+      pageW - margin,
+      pageH - margin,
       { align: 'right' }
     );
   }

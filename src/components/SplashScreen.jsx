@@ -2,15 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './SplashScreen.css';
 import donvGif from './images/donv.gif';
 
-// Если понадобится вернуть анимацию текста, можно раскомментировать
-// const texts = [
-//   'Будим ИИ...',
-//   'Загружаем интеллект...',
-//   'SpeechAI Assistant',
-// ];
+
 
 const SplashScreen = ({ visible, isDark, userName }) => {
-  // Typewriter effect for 'Загружаем...'
+
   const fullText = 'Загружаем...';
   const [typed, setTyped] = useState('');
   const [deleting, setDeleting] = useState(false);

@@ -4,7 +4,7 @@ export async function getAIResponse(userText, systemPrompt) {
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ text: userText, systemPrompt }) // 👈 правильно разложено
+    body: JSON.stringify({ text: userText, systemPrompt })
   });
 
   const data = await response.json();

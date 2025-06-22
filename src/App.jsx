@@ -8,7 +8,7 @@ import { useTelegram } from './components/utils/useTelegram';
 import InfoModal from './components/InfoModal';
 import emojiGif from './components/images/emoji.gif';
 import DevModal from './components/DevModal';
-import { exportChatToPDF, sendChatToBotForPDF } from './components/utils/exportToPDF';
+import { exportChatToPDF } from './components/utils/exportToPDF';
 import WelcomeModal from './components/WelcomeModal';
 import SplashScreen from './components/SplashScreen';
 
@@ -33,15 +33,15 @@ function App() {
   const [isDark, setIsDark] = useState(() => document.body.classList.contains('dark'));
   const [pendingDeleteId, setPendingDeleteId] = useState(null);
   const pendingDeleteTimer = useRef(null);
+  const [userName, setUserName] = useState('гость');
+  const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
 
-  // Получаем имя пользователя из Telegram WebApp
-  let userName = 'гость';
-  try {
-    const tgUser = window.Telegram?.WebApp?.initDataUnsafe?.user;
-    if (tgUser) {
-      userName = tgUser.first_name || (tgUser.username ? '@' + tgUser.username : 'гость');
+  useEffect(() => {
+    if (tg?.user) {
+      setUserName(tg.user.first_name || (tg.user.username ? '@' + tg.user.username : 'гость'));
+      setIsUserDataLoaded(true);
     }
-  } catch {}
+  }, [tg]);
 
   // Применяем сохранённую тему до рендера App
   const savedTheme = localStorage.getItem('theme') || sessionStorage.getItem('theme');
@@ -153,6 +153,25 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    // Hide splash screen after 3 seconds or when user data is loaded + short delay
+    const timer = setTimeout(() => {
+      setShowSplash(false);
+    }, 3000); // Fallback timer
+
+    if (isUserDataLoaded) {
+      const userLoadTimer = setTimeout(() => {
+        setShowSplash(false);
+      }, 500); // Hide shortly after user data loads
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(userLoadTimer);
+      };
+    }
+
+    return () => clearTimeout(timer);
+  }, [isUserDataLoaded]); // Depend on isUserDataLoaded and initial render
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -253,8 +272,11 @@ function App() {
   };
 
   const handleExportPDF = () => {
-    if (selectedChat) {
-      exportChatToPDF(selectedChat);
+    const currentChat = chats.find(chat => chat.id === selectedChatId);
+    if (currentChat && currentChat.messages && currentChat.messages.length > 0) {
+      exportChatToPDF(currentChat);
+    } else {
+      alert('Нет сообщений для экспорта в PDF');
     }
   };
 
@@ -296,6 +318,7 @@ function App() {
               onOpenWelcomeModal={() => setShowWelcomeModal(true)}
               pendingDeleteId={pendingDeleteId}
               onCancelDelete={handleCancelDelete}
+              onOpenInfoModal={() => setShowInfoModal(true)}
             />
           </div>
         </div>

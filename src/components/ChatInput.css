@@ -229,3 +229,24 @@ body.dark .pdf-icon {
   cursor: not-allowed;
   pointer-events: none;
 }
+
+.transcribing-indicator {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  z-index: 1000;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.transcribing-indicator.hidden {
+  opacity: 0;
+}

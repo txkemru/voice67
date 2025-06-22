@@ -1,30 +1,66 @@
 import { useEffect, useState } from 'react';
-import { WebApp } from '@twa-dev/sdk';
 
 export const useTelegram = () => {
   const [tg, setTg] = useState(null);
 
   useEffect(() => {
-    // Проверка доступности Telegram SDK и объекта window
-    if (typeof window !== 'undefined' && WebApp?.ready) {
-      WebApp.ready();
-      WebApp.expand();
+    console.log('useEffect in useTelegram running');
+    const webApp = window.Telegram?.WebApp;
+    console.log('window.Telegram?.WebApp:', webApp);
 
-      // Разворачиваем снова, если свернуто
-      WebApp.onEvent('viewportChanged', () => {
-        if (!WebApp.isExpanded) WebApp.expand();
+    if (webApp?.ready) {
+      console.log('WebApp is ready. Initializing...');
+      webApp.ready();
+      webApp.expand();
+
+      webApp.onEvent('viewportChanged', () => {
+        if (!webApp.isExpanded) webApp.expand();
       });
 
-      setTg(WebApp);
+      // Добавляем данные пользователя
+      const userData = webApp.initDataUnsafe?.user;
+      console.log('User data from WebApp (ready state):', userData);
+
+      setTg({
+        ...webApp,
+        user: userData
+      });
 
       return () => {
-        WebApp.offEvent('viewportChanged');
+        webApp.offEvent('viewportChanged');
       };
+    } else if (typeof window !== 'undefined' && process.env.NODE_ENV === "development") {
+       console.log("⚠️ Telegram SDK не найден или не готов (запущено вне Telegram Mini App в режиме разработки)");
+        // Для разработки создаем моковые данные без данных пользователя, чтобы App.jsx мог обработать это как "гость"
+        setTg({
+          // Минимальные моковые данные для имитации WebApp
+          initDataUnsafe: {}, // нет данных пользователя
+          user: null, // явно указываем, что пользователя нет
+          ready: () => console.log('Mock WebApp.ready() called'),
+          expand: () => console.log('Mock WebApp.expand() called'),
+          onEvent: (event, handler) => console.log(`Mock WebApp.onEvent('${event}') registered`),
+          offEvent: (event, handler) => console.log(`Mock WebApp.offEvent('${event}') unregistered`),
+          MainButton: {
+            setText: (text) => console.log(`Mock MainButton.setText('${text}')`),
+            setParams: (params) => console.log('Mock MainButton.setParams:', params),
+            show: () => console.log('Mock MainButton.show()'),
+            hide: () => console.log('Mock MainButton.hide()'),
+          },
+          BackButton: {
+            show: () => console.log('Mock BackButton.show()'),
+            hide: () => console.log('Mock BackButton.hide()'),
+          },
+          isExpanded: true,
+          viewportHeight: window.innerHeight,
+          viewportStableHeight: window.innerHeight,
+          themeParams: {},
+          colorScheme: 'light',
+        });
     } else {
-      // Только в режиме разработки
-      if (process.env.NODE_ENV === "development") {
-        console.log("⚠️ Telegram SDK не найден (запущено вне Telegram Mini App)");
-      }
+        console.log('Telegram WebApp SDK не найден или не готов. Нет моковых данных для продакшена.');
+        // В продакшен режиме, если SDK не готов, оставляем tg как null или пустой объект
+        // Установим user в null, чтобы App.jsx корректно отобразил "гость"
+         setTg({ user: null });
     }
   }, []);
 

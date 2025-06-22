@@ -4,7 +4,7 @@ import './Sidebar.css';
 import FooterMenu from './FooterMenu';
 import ThemeIcon from './ThemeIcon';
 
-function Sidebar({ chats = [], onDeleteChat, onSelectChat, onRenameChat, onOpenDeveloper, onOpenWelcomeModal, pendingDeleteId, onCancelDelete }) {
+function Sidebar({ chats = [], onDeleteChat, onSelectChat, onRenameChat, onOpenDeveloper, onOpenWelcomeModal, pendingDeleteId, onCancelDelete, onOpenInfoModal }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isDarkTheme, setIsDarkTheme] = useState(() => {
     return document.body.classList.contains('dark');
@@ -78,7 +78,22 @@ function Sidebar({ chats = [], onDeleteChat, onSelectChat, onRenameChat, onOpenD
           onOpenDevModal={onOpenDeveloper}
           onOpenWelcomeModal={onOpenWelcomeModal}
         />
-        <button className="theme-toggle-button-sidebar" onClick={handleToggleTheme} style={{display:'flex',alignItems:'center',gap:8,justifyContent:'center'}}>
+        <button 
+          className="theme-toggle-button-sidebar" 
+          onClick={onOpenInfoModal}
+          style={{display:'flex',alignItems:'center',gap:8,justifyContent:'center'}}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M12 16v-4M12 8h.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>Информация</span>
+        </button>
+        <button 
+          className="theme-toggle-button-sidebar" 
+          onClick={handleToggleTheme} 
+          style={{display:'flex',alignItems:'center',gap:8,justifyContent:'center'}}
+        >
           <ThemeIcon isDark={isDarkTheme} />
           <span>Сменить тему</span>
         </button>
